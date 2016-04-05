@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="main.css" />
+</head>
+<body>
+	<header></header>
+	<div id="content">
+
+		<h1 id="hello">Hello World!</h1>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo aliquam impedit obcaecati molestias provident consequatur quam dolorem ipsum asperiores. Sapiente minima officiis labore optio nobis magnam, delectus nulla facere neque.</p>
+
+		<h1 id="text">This is a text</h1>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae enim dolorem quam at perferendis magni quia quasi, veniam qui nostrum voluptate praesentium culpa, totam reprehenderit dignissimos illo facilis provident ratione.</p>
+
+		<h1 id="suh">Suh dude</h1>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero eius eos in repudiandae, velit. Vero voluptate, reprehenderit quod cumque architecto praesentium. Accusantium ea molestias magni tempora odio sequi, eius quaerat.</p>
+
+		<h1 id="library">Quite! This is a library!</h1>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis est aperiam impedit maiores labore, asperiores fugiat laborum ullam repellendus temporibus blanditiis cumque, iure debitis doloribus vitae in dolorum velit rem?</p>
+
+		<h1 id="goodbuy">Goodbuy!</h1>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et reprehenderit illo incidunt dolorem expedita, voluptatem excepturi, eligendi cum animi architecto beatae, nemo vitae odio consequuntur officia suscipit voluptatibus eveniet sint?</p>
+
+	</div>
+	<div id="menu">
+		<ul>
+			<li><a href="#hello">Hello World!</a></li>
+			<li><a href="#text">This is a text</a></li>
+			<li><a href="#suh">Suh dude</a></li>
+			<li><a href="#library">Quite! This is a library!</a></li>
+			<li><a href="#goodbuy">Goodbuy!</a></li>
+		</ul>
+	</div>
+
+	<div class="after_content">
+	</div>
+
+	<footer></footer>
+
+
+<script>
+	(function(){
+		window.addEventListener('scroll', Active, false);
+
+		function Active(){
+			var c = document.getElementById('content');
+			var a = document.getElementById('content').querySelectorAll('h1');
+			var b = document.getElementById('menu').querySelectorAll('ul > li > a');
+
+			if((c.getBoundingClientRect().top <= 0) && (c.getBoundingClientRect().bottom >= 0)){
+
+				for(var i = 0; i < a.length; i++){
+					if(a[i].getBoundingClientRect().bottom <= a[i].getBoundingClientRect().height){	
+						for(var y = 0; y < b.length; y++){
+							if (b[y].hash == '#' + a[i].id){
+								b[y].parentNode.className = 'active';
+							}
+							else{
+								b[y].parentNode.className = '';
+							}
+						}
+					}
+				}
+			}
+			else{
+				for(var y = 0; y < b.length; y++){
+					b[y].parentNode.className = '';
+				}
+			}
+		}
+	})()
+</script>
+
+<script>
+	(function(){
+		var a = document.querySelector('#menu'), b = null;
+		window.addEventListener('scroll', Stick, false);
+
+		function Stick(){
+
+			if(b == null) {
+				var aStyle = getComputedStyle(a), s = '';
+				for(var i = 0; i < aStyle.length; i++){
+					if (aStyle[i].indexOf('width') == 0 || aStyle[i].indexOf('height') == 0 || aStyle[i].indexOf('background-color') == 0) {
+			        s += aStyle[i] + ': ' +aStyle.getPropertyValue(aStyle[i]) + '; ';
+			      	}
+				}
+				
+				b = document.createElement('div');
+				b.style.cssText = s;
+				a.insertBefore(b, a.firstChild);
+
+				for(var i = 1; i < a.childNodes.length; i++){
+					b.appendChild(a.childNodes[1]);
+				}
+			}
+
+			var c = document.querySelector('footer'),
+			aCoord = a.getBoundingClientRect(),
+			d = b.getBoundingClientRect().bottom - b.getBoundingClientRect().top - c.getBoundingClientRect().top;
+
+			if(aCoord.top <= 0) {
+				if(d >= 0) {
+					b.className = 'relative';
+					b.style.top =  - d - aCoord.top +'px';
+				}
+				else {
+					b.className = 'sticky';
+					b.style.top = 0 + 'px';
+				}
+			}
+			else {
+				b.className = '';
+				b.style.top = '';
+			}	
+		}
+	})()
+</script>
+
+</body>
